@@ -1,5 +1,7 @@
 .container {
-	background-color: #222222aa;
+	background-color: rgba(255, 255, 255, 0.25);
+	backdrop-filter: blur(4px);
+	
 	padding: 40px 20px;
 
 	display: flex;
@@ -10,7 +12,9 @@
 
 	.name-container {
 		h2 {
+			font-size: 1.75rem;
 			color: white;
+			text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 		}
 	}
 
@@ -30,11 +34,18 @@
 			width: calc(90vw / 2 - 40px / 2);
 			max-width: 300px;
 			height: auto;
-
+			
 			&:hover {
-				outline: 1px solid white;
+				outline: 1px solid rgba(255, 255, 255, 0.25);
 			}
 		}
 	}
+
+	.result {
+		h2 {
+			font-size: 1.75rem;
+			color: white;
+			text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+		}
+	}
 }
-  

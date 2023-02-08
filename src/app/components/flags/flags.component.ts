@@ -12,6 +12,7 @@ export class FlagsComponent implements OnInit {
   public countries!: Country[]
   public randomCountries!: Country[]
   public randomName!: string
+  public result!: string
 
   constructor(
     private countryService: CountriesService
@@ -22,6 +23,10 @@ export class FlagsComponent implements OnInit {
     this.getCountries()
   }
   
+  public correctFlag(name: string): void {
+    this.result = name === this.randomName ? "Correct!" : "Wrong"
+  }
+
   private getCountries(): void {
     this.countryService.getCountry().subscribe(
       {
@@ -43,10 +48,6 @@ export class FlagsComponent implements OnInit {
   private randomCountryName(): void {
     const randomIndex = Math.floor(Math.random() * this.randomCountries.length)
     this.randomName = this.randomCountries[randomIndex].name.common
-  }
-
-  public checkRightAnswer(): void {
-    
   }
   
 }

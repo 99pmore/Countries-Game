@@ -1,8 +1,15 @@
-<div class="container" *ngIf="countries">
+<div class="container" *ngIf="countries" [ngStyle]="{ 'background-color': result ? (result === 'Correct!' ? 'rgba(0, 255, 0, 0.25)' : 'rgba(255, 0, 0, 0.25)') : '' }">
     <div class="name-container">
         <h2>{{ randomName }}</h2>
     </div>
     <div class="flags-container">
-        <img *ngFor="let country of randomCountries" [src]="country.flags.svg" [alt]="country.flags.alt ? country.flags.alt : 'The flag of ' + country.name.common">
+        <img *ngFor="let country of randomCountries" 
+            [src]="country.flags.svg" 
+            [alt]="country.flags.alt ? country.flags.alt : 'The flag of ' + country.name.common"
+            (click)="correctFlag(country.name.common)"
+        >
+    </div>
+    <div class="result">
+        <h2>{{ result }}</h2>
     </div>
 </div>
