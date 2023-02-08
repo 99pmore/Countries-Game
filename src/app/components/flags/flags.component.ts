@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Country } from '../../models/country.interface'
 import { CountriesService } from 'src/app/services/countries.service';
+import { ScoreService } from 'src/app/services/score.service';
 
 @Component({
   selector: 'app-flags',
@@ -15,7 +16,8 @@ export class FlagsComponent implements OnInit {
   public result!: string
 
   constructor(
-    private countryService: CountriesService
+    private countryService: CountriesService,
+    private scoreService: ScoreService
   ) { }
 
 
@@ -24,7 +26,14 @@ export class FlagsComponent implements OnInit {
   }
   
   public correctFlag(name: string): void {
-    this.result = name === this.randomName ? "Correct!" : "Wrong"
+    if (name === this.randomName) {
+      this.result = "Correct!"
+      this.scoreService.incrementScore()
+
+    } else {
+      this.result = "Wrong"
+      this.scoreService.resetScore()
+    }
   }
 
   private getCountries(): void {
