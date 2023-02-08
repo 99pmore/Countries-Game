@@ -1,6 +1,7 @@
 main {
     background: 
-    linear-gradient(45deg, rgba(0, 0, 0, 0.5) 0%, rgba(128, 128, 128, 0.5) 50%, rgba(0, 0, 0, 0.5) 100%),
+    // linear-gradient(45deg, rgba(0, 0, 0, 0.5) 0%, rgba(128, 128, 128, 0.5) 50%, rgba(0, 0, 0, 0.5) 100%),
+    linear-gradient(45deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%),
     url(../../../assets/img/map.jpg) 
     no-repeat center / cover;
     background-attachment: fixed;
@@ -12,5 +13,4 @@ main {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 50px;
 }
