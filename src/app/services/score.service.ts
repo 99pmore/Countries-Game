@@ -9,7 +9,7 @@ export class ScoreService {
   private scoreSubject = new BehaviorSubject<number>(0)
   public score$: Observable<number> = this.scoreSubject.asObservable()
 
-  private highScoreSubject = new BehaviorSubject<number>(0)
+  private highScoreSubject = new BehaviorSubject<number>(Number(localStorage.getItem('highScore')) || 0)
   public highScore$: Observable<number> = this.highScoreSubject.asObservable()
 
 
