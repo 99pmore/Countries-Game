@@ -1,0 +1,40 @@
+.container {
+	background-color: #222222aa;
+	padding: 40px 20px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 50px;
+
+	.name-container {
+		h2 {
+			color: white;
+		}
+	}
+
+	.flags-container {
+		width: 100%;
+	
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		grid-column-gap: 20px;
+		grid-row-gap: 20px;
+
+		align-items: center;
+		
+		img {
+			cursor: pointer;
+			width: calc(90vw / 2 - 40px / 2);
+			max-width: 300px;
+			height: auto;
+
+			&:hover {
+				outline: 1px solid white;
+			}
+		}
+	}
+}
+  

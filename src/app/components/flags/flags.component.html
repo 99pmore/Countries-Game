@@ -1,1 +1,8 @@
-<p>flags works!</p>
+<div class="container" *ngIf="countries">
+    <div class="name-container">
+        <h2>{{ randomName }}</h2>
+    </div>
+    <div class="flags-container">
+        <img *ngFor="let country of randomCountries" [src]="country.flags.svg" [alt]="country.flags.alt ? country.flags.alt : 'The flag of ' + country.name.common">
+    </div>
+</div>
