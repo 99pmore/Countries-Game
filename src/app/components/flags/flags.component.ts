@@ -20,21 +20,28 @@ export class FlagsComponent implements OnInit {
     private scoreService: ScoreService
   ) { }
 
-
   ngOnInit(): void {
     this.getCountries()
   }
   
   public correctFlag(name: string): void {
-    if (name === this.randomName) {
-      this.result = "Correct!"
-      this.scoreService.incrementScore()
-
-    } else {
-      this.result = "Wrong"
-      this.scoreService.resetScore()
-    }
+    this.result = name === this.randomName ? "Correct!" : "Wrong"
+    setTimeout(() =>{
+      if (this.result === "Correct!") {
+        this.scoreService.incrementScore()
+        this.generateRandomCountries()
+        this.randomCountryName()
+        this.result = ''
+        
+      } else {
+        this.scoreService.resetScore()
+        this.generateRandomCountries()
+        this.randomCountryName()
+        this.result = ''
+      }
+    }, 750)
   }
+  
 
   private getCountries(): void {
     this.countryService.getCountry().subscribe(
