@@ -14,6 +14,7 @@ export class FlagsComponent implements OnInit {
   public randomCountries!: Country[]
   public randomName!: string
   public result!: string
+  public selectedCountries!: Country[]
 
   constructor(
     private countryService: CountriesService,
@@ -29,6 +30,10 @@ export class FlagsComponent implements OnInit {
     setTimeout(() =>{
       if (this.result === "Correct!") {
         this.scoreService.incrementScore()
+        const country = this.randomCountries.find(country => country.name.common === this.randomName)
+        if (country) {
+          this.selectedCountries.push(country)
+        }
         this.generateRandomCountries()
         this.randomCountryName()
         this.result = ''
@@ -48,6 +53,7 @@ export class FlagsComponent implements OnInit {
       {
         next: (response) => {
           this.countries = response
+          this.selectedCountries = []
           this.generateRandomCountries()
           this.randomCountryName()
         }
@@ -57,6 +63,7 @@ export class FlagsComponent implements OnInit {
   
   private generateRandomCountries(): void {
     this.randomCountries = this.countries
+      .filter(country => !this.selectedCountries.includes(country))
       .sort(() => Math.random() - 0.5)
       .slice(0, 4)
   }
