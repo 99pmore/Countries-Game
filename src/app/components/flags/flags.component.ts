@@ -14,9 +14,9 @@ export class FlagsComponent implements OnInit {
   public countries!: Country[]
   public randomCountries!: Country[]
   public randomName!: string
-  public result!: string
+  public result: string = ''
 
-  private selectedCountries!: Country[]
+  private selectedCountries: Country[] = []
   private countriesCount!: number
 
   constructor(
@@ -30,54 +30,9 @@ export class FlagsComponent implements OnInit {
   
   public correctFlag(name: string): void {
     this.result = name === this.randomName ? "Correct!" : "Wrong"
+    
     setTimeout(() =>{
-      if (this.result === "Correct!") {
-        this.scoreService.incrementScore()
-
-        const country = this.randomCountries.find(country => country.name.common === this.randomName)
-        if (country) {
-          this.selectedCountries.push(country)
-        }
-
-        if (this.selectedCountries.length === this.countriesCount) {
-          Swal.fire({
-            imageUrl: '../../../assets/img/trophy.webp',
-            imageHeight: 100,
-            imageAlt: 'Trophy icon',
-            title: 'Congratulations!',
-            text: "You've hit all the flags!",
-            confirmButtonText: 'Continue',
-            showDenyButton: true,
-            denyButtonText: `Restart`,
-
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.selectedCountries = []
-              this.generateRandomCountries()
-              this.randomCountryName()
-              this.result = ''
-
-            } else if (result.isDenied) {
-              this.scoreService.resetScore()
-              this.selectedCountries = []
-              this.generateRandomCountries()
-              this.randomCountryName()
-              this.result = ''
-            }
-          })
-        }
-        
-        this.generateRandomCountries()
-        this.randomCountryName()
-        this.result = ''
-        
-      } else {
-        this.scoreService.resetScore()
-        this.selectedCountries = []
-        this.generateRandomCountries()
-        this.randomCountryName()
-        this.result = ''
-      }
+      this.result === "Correct!" ? this.handleSuccess() : this.handleFail()
     }, 750)
   }
   
@@ -88,7 +43,6 @@ export class FlagsComponent implements OnInit {
         next: (response) => {
           this.countries = response
           this.countriesCount = this.countries.length
-          this.selectedCountries = []
 
           this.generateRandomCountries()
           this.randomCountryName()
@@ -107,6 +61,51 @@ export class FlagsComponent implements OnInit {
   private randomCountryName(): void {
     const randomIndex = Math.floor(Math.random() * this.randomCountries.length)
     this.randomName = this.randomCountries[randomIndex].name.common
+  }
+
+  private handleSuccess(): void {
+    this.scoreService.incrementScore()
+
+    const country = this.randomCountries.find(country => country.name.common === this.randomName)
+    if (country) {
+      this.selectedCountries = [...this.selectedCountries, country]
+    }
+
+    this.selectedCountries.length === this.countriesCount ? this.showCongratulationsMsg() : this.reRoll()  
+  }
+
+  private handleFail(): void {
+    this.scoreService.resetScore()
+    this.reRoll()
+  }
+
+  private reRoll(): void {
+    this.generateRandomCountries()
+    this.randomCountryName()
+    this.result = ''
+  }
+
+  private showCongratulationsMsg(): void {
+    Swal.fire({
+      imageUrl: '../../../assets/img/trophy.webp',
+      imageHeight: 100,
+      imageAlt: 'Trophy icon',
+      title: 'Congratulations!',
+      text: "You've hit all the flags!",
+      confirmButtonText: 'Continue',
+      showDenyButton: true,
+      denyButtonText: `Restart`,
+
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.selectedCountries = []
+        this.reRoll()
+
+      } else if (result.isDenied) {
+        this.selectedCountries = []
+        this.handleFail()
+      }
+    })
   }
   
 }
