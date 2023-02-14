@@ -7,6 +7,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { FlagsComponent } from './components/flags/flags.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ScoreComponent } from './components/score/score.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ScoreComponent } from './components/score/score.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    [SweetAlert2Module.forRoot()],
   ],
   providers: [],
   bootstrap: [AppComponent]
