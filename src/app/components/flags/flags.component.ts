@@ -69,7 +69,6 @@ export class FlagsComponent implements OnInit {
     const country = this.randomCountries.find(country => country.name.common === this.randomName)
     if (country) {
       this.selectedCountries.push(country)
-      console.log(this.selectedCountries)
     }
 
     this.selectedCountries.length === this.countriesCount ? this.showCongratulationsMsg() : this.reRoll()  
