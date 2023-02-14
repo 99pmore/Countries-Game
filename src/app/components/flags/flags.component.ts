@@ -39,8 +39,7 @@ export class FlagsComponent implements OnInit {
           this.selectedCountries.push(country)
         }
 
-        // if (this.selectedCountries.length === this.countriesCount) {
-        if (this.selectedCountries.length === 2) {
+        if (this.selectedCountries.length === this.countriesCount) {
           Swal.fire({
             imageUrl: '../../../assets/img/trophy.webp',
             imageHeight: 100,
