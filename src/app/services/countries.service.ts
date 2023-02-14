@@ -14,7 +14,7 @@ export class CountriesService {
     private httpClient: HttpClient
   ) { }
 
-  public getCountry(): Observable<Country[]> {
+  public getCountries(): Observable<Country[]> {
     return this.httpClient.get<Country[]>(this.BASE_URL)
   }
 }

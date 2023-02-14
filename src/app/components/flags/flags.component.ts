@@ -49,7 +49,7 @@ export class FlagsComponent implements OnInit {
   
 
   private getCountries(): void {
-    this.countryService.getCountry().subscribe(
+    this.countryService.getCountries().subscribe(
       {
         next: (response) => {
           this.countries = response
