@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Country } from '../../models/country.interface'
 import { CountriesService } from 'src/app/services/countries.service';
 import { ScoreService } from 'src/app/services/score.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-flags',
@@ -14,7 +15,9 @@ export class FlagsComponent implements OnInit {
   public randomCountries!: Country[]
   public randomName!: string
   public result!: string
-  public selectedCountries!: Country[]
+
+  private selectedCountries!: Country[]
+  private countriesCount!: number
 
   constructor(
     private countryService: CountriesService,
@@ -30,16 +33,48 @@ export class FlagsComponent implements OnInit {
     setTimeout(() =>{
       if (this.result === "Correct!") {
         this.scoreService.incrementScore()
+
         const country = this.randomCountries.find(country => country.name.common === this.randomName)
         if (country) {
           this.selectedCountries.push(country)
         }
+
+        // if (this.selectedCountries.length === this.countriesCount) {
+        if (this.selectedCountries.length === 2) {
+          Swal.fire({
+            imageUrl: '../../../assets/img/trophy.webp',
+            imageHeight: 100,
+            imageAlt: 'Trophy icon',
+            title: 'Congratulations!',
+            text: "You've hit all the flags!",
+            confirmButtonText: 'Continue',
+            showDenyButton: true,
+            denyButtonText: `Restart`,
+
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.selectedCountries = []
+              this.generateRandomCountries()
+              this.randomCountryName()
+              this.result = ''
+
+            } else if (result.isDenied) {
+              this.scoreService.resetScore()
+              this.selectedCountries = []
+              this.generateRandomCountries()
+              this.randomCountryName()
+              this.result = ''
+            }
+          })
+        }
+        
         this.generateRandomCountries()
         this.randomCountryName()
         this.result = ''
         
       } else {
         this.scoreService.resetScore()
+        this.selectedCountries = []
         this.generateRandomCountries()
         this.randomCountryName()
         this.result = ''
@@ -53,7 +88,9 @@ export class FlagsComponent implements OnInit {
       {
         next: (response) => {
           this.countries = response
+          this.countriesCount = this.countries.length
           this.selectedCountries = []
+
           this.generateRandomCountries()
           this.randomCountryName()
         }
