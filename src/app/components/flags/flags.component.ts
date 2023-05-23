@@ -15,6 +15,7 @@ export class FlagsComponent implements OnInit {
   public randomCountries!: Country[]
   public randomName!: string
   public result: string = ''
+  public errorMessage!: string;
 
   private selectedCountries: Country[] = []
   private countriesCount!: number
@@ -46,6 +47,9 @@ export class FlagsComponent implements OnInit {
 
           this.generateRandomCountries()
           this.randomCountryName()
+        },
+        error: (error) => {
+          this.errorMessage = error
         }
       }
     )

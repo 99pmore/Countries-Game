@@ -11,3 +11,7 @@
         <h2>{{ result }}</h2>
     </div>
 </div>
+<div class="error" *ngIf="errorMessage">
+    <h2>An error occurred while getting countries. Please try again later.</h2>
+    <p>{{ errorMessage }}</p>
+</div>

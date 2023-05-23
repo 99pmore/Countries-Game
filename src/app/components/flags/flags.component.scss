@@ -54,3 +54,24 @@
 		}
 	}
 }
+
+.error {
+	background-color: rgba(255, 255, 255, 0.25);
+	backdrop-filter: blur(4px);
+
+	padding: 40px 20px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 20px;
+
+	h2 {
+		color: white;
+	}
+
+	h2, p {
+		text-align: center;
+	}
+}

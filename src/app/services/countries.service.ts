@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Country } from '../models/country.interface';
-import { Observable } from 'rxjs';
+import { Observable, catchError,throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,10 @@ export class CountriesService {
   ) { }
 
   public getCountries(): Observable<Country[]> {
-    return this.httpClient.get<Country[]>(this.BASE_URL)
+    return this.httpClient.get<Country[]>(this.BASE_URL).pipe(
+      catchError((error) => {
+        return throwError(error.message)
+      })
+    )
   }
 }
